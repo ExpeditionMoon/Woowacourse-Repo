@@ -7,27 +7,29 @@ public class Application {
     public static void main(String[] args) {
         // TODO: 프로그램 구현
         String[] carList = carList();
-        int time = time();
+        if (error(carList)) {
+            int time = time();
 
-        String[] go = new String[carList.length];
-        for (int i = 0; i < time; i++) {
-            go = goStop(go);
-            for (int j = 0; j < carList.length; j++) {
-                System.out.println(carList[j] + " : " + go[j]);
+            String[] go = new String[carList.length];
+            for (int i = 0; i < time; i++) {
+                go = goStop(go);
+                for (int j = 0; j < carList.length; j++) {
+                    System.out.println(carList[j] + " : " + go[j]);
+                }
+                System.out.println();
             }
-            System.out.println();
-        }
 
-        String[] win = winner(carList, go).split(" ");
-        StringBuilder sb = new StringBuilder();
-        sb.append("최종 우승자 : ");
-        for (int i = 0; i < win.length; i++) {
-            sb.append(win[i]);
-            if (i < win.length - 1) {
-                sb.append(", ");
+            String[] win = winner(carList, go).split(" ");
+            StringBuilder sb = new StringBuilder();
+            sb.append("최종 우승자 : ");
+            for (int i = 0; i < win.length; i++) {
+                sb.append(win[i]);
+                if (i < win.length - 1) {
+                    sb.append(", ");
+                }
             }
+            System.out.println(sb);
         }
-        System.out.println(sb);
     }
 
     static String[] carList() {
@@ -75,5 +77,12 @@ public class Application {
             }
         }
         return win;
+    }
+
+    static boolean error(String[] carList) {
+        for (String s : carList) {
+            if (s.length() >= 6) throw new IllegalArgumentException("자동차 이름은 5자 이하만 가능합니다.");
+        }
+        return true;
     }
 }
